@@ -111,3 +111,9 @@ background:
       command: ["bundle", "exec", "sidekiq", "-C", "config/sidekiq.yml"]
       # SIGTERM triggers a quick exit; gracefully terminate instead
       graceful_exit: ["bundle", "exec", "sidekiqctl", "stop", "tmp/pids/sidekiq.pid", "30"]
+
+rake_files:
+  enabled: true
+  jobs:
+    - name: emails-prefix
+      command: ['command']
