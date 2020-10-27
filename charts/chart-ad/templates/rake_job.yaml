@@ -1,6 +1,6 @@
-{{- if eq .Values.image.env "staging" }}
+{{- if and .Values.rake_files.enabled (eq .Values.image.env "staging") }}
 {{ $image := .Values.image }}
-{{- range .Values.rake_files }}
+{{- range .Values.rake_files.jobs }}
 apiVersion: batch/v1
 kind: Job
 metadata:

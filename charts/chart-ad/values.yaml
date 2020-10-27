@@ -4,7 +4,7 @@ webapp_defaults: &webapp_defaults
   resources:
     limits:
       cpu: 0.8
-      memory:512Mi
+      memory: 512Mi
     requests:
       cpu: 0.7
       memory: 256Mi
@@ -24,7 +24,7 @@ rails_env:
   SITEMAP_HOST: &SITEMAP_HOST cdn.example.com
 
 image:
-  repository: .dkr.ecr.us-east-1.amazonaws.com/archdaily/example
+  repository: XXXXXXXXXXXX.dkr.ecr.us-east-1.amazonaws.com/archdaily/example
   tag: '1.0'
   env: production
   branch: master
@@ -103,11 +103,16 @@ cron:
       command: ['command']
 
 background:
-  enabled: false
+  enabled: true
   resources: *sidekiq_defaults
 
   jobs:
     - name: sidekiq
-      command: ["bundle", "exec", "sidekiq", "-C", "config/sidekiq.yml"]
-      # SIGTERM triggers a quick exit; gracefully terminate instead
-      graceful_exit: ["bundle", "exec", "sidekiqctl", "stop", "tmp/pids/sidekiq.pid", "30"]
+      command: ['bundle', 'exec', 'sidekiq', '-C', 'config/sidekiq.yml']
+      graceful_exit: ["bundle", "exec", "sidekiqctl", "stop", "tmp/pids/sidekiq.pid", "30"] # SIGTERM triggers a quick exit; gracefully terminate instead
+
+rake_files:
+  enabled: true
+  jobs:
+    - name: emails-prefix
+      command: ['command']
