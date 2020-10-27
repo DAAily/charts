@@ -1,0 +1,46 @@
+{{- if .Values.ingress.enabled -}}
+{{- $releaseName := .Release.Name -}}
+{{- $imageTag := .Values.image.tag -}}
+{{- $imageEnv := .Values.image.env -}}
+{{- $imageBranch := .Values.image.branch -}}
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ printf "%s" .Release.Name | trunc 63 }}
+  labels:
+    app: {{ printf "%s" .Release.Name | trunc 63 }}
+    version: {{ .Chart.Version }}
+    release: {{ .Release.Name }}
+    env: {{ .Values.image.env }}
+{{- if .Values.ingress.annotations }}
+  annotations:
+  {{- if eq $imageEnv "production" }}
+    {{ toYaml .Values.ingress.annotations.production | indent 4 | trim }}
+  {{- else }}
+    {{ toYaml .Values.ingress.annotations.default | indent 4 | trim }}
+  {{- end }}
+{{- end }}
+spec:
+  rules:
+  {{- range $rule := .Values.ingress.rules }}
+    {{- if ne $imageEnv "production" }}
+    - host: {{ printf "%s" $releaseName | trunc 63 }}.staging.archdaily.com
+    {{- else }}
+    -
+    {{- end }}
+      http:
+        paths:
+        {{- range $item := $rule.paths.proxy_pass }}
+        - backend:
+            serviceName: {{ printf "%s" $releaseName | trunc 63 }}-{{ .serviceName }}-proxy-pass
+            servicePort: {{ .servicePort }}
+          path: {{ .path }}
+        {{- end -}}
+        {{- range $item := $rule.paths.default }}
+        - backend:
+            serviceName: {{ printf "%s" $releaseName | trunc 63 }}
+            servicePort: {{ .servicePort }}
+          path: {{ .path }}{{ if eq $imageEnv "production" }}*{{ end }}
+        {{- end -}}
+  {{- end -}}
+{{- end }}

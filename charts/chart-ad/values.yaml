@@ -1,0 +1,113 @@
+# default definitions
+
+webapp_defaults: &webapp_defaults
+  resources:
+    limits:
+      cpu: 0.8
+      memory:512Mi
+    requests:
+      cpu: 0.7
+      memory: 256Mi
+
+sidekiq_defaults: &sidekiq_defaults
+  resources:
+    limits:
+      cpu: 200m
+      memory: 512Mi
+    requests:
+      cpu: 200m
+      memory: 256Mi
+
+rails_env:
+  ALFRED_HOST: example.com
+  KENNETH_HOST: &KENNETH_HOST example.com
+  SITEMAP_HOST: &SITEMAP_HOST cdn.example.com
+
+image:
+  repository: .dkr.ecr.us-east-1.amazonaws.com/archdaily/example
+  tag: '1.0'
+  env: production
+  branch: master
+
+deployment:
+  enabled: true
+
+  workingDir: /home/app/webapp # Passenger Docker defaults
+  imagePullPolicy: Always
+
+  # HPA basic
+  minReplicas: 1
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 65
+  targetMemUtilizationPercentage: 80
+
+  containers:
+  - name: webapp
+    ports:
+    - containerPort: 80
+      protocol: TCP
+    healthcheck:
+      readinessProbe:
+        path: path/to/readiness
+        timeoutSeconds: 5
+      livenessProbe:
+        path: path/to/liveness
+        timeoutSeconds: 10
+    <<: *webapp_defaults
+
+service:
+  enabled: true
+  type: NodePort
+
+  ports:
+  - name: http
+    port: 80
+    targetPort: 80
+    protocol: TCP
+
+external_services: &external_services
+  - path: /auth
+    serviceName: kenneth
+    servicePort: 80
+    externalName: *KENNETH_HOST
+  - path: /sitemaps/*
+    serviceName: sitemap
+    servicePort: 80
+    externalName: *SITEMAP_HOST
+
+ingress:
+  enabled: false
+
+  annotations:
+  # - nginx.ingress.kubernetes.io/proxy-body-size: 100m
+  # - kubernetes.io/ingress.class: nginx
+  # - kubernetes.io/tls-acme: 'true'
+  #
+  # ALB Ingress Controller
+  # - kubernetes.io/ingress.class: alb
+  # - alb.ingress.kubernetes.io/scheme: internet-facing
+
+  rules:
+  - url: example.dyn.archdaily.com/
+    serviceName: example
+    servicePort: 80
+
+cron:
+  enabled: false
+  resources: *sidekiq_defaults
+
+  jobs:
+    -
+      name: cronjob-name
+      schedule: '* * * * *'  #cron schedule expression
+      command: ['command']
+
+background:
+  enabled: false
+  resources: *sidekiq_defaults
+
+  jobs:
+    - name: sidekiq
+      command: ["bundle", "exec", "sidekiq", "-C", "config/sidekiq.yml"]
+      # SIGTERM triggers a quick exit; gracefully terminate instead
+      graceful_exit: ["bundle", "exec", "sidekiqctl", "stop", "tmp/pids/sidekiq.pid", "30"]
