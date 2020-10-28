@@ -1,4 +1,4 @@
-# default definitions
+, 'namespace:task'# default definitions
 
 webapp_defaults: &webapp_defaults
   resources:
@@ -19,12 +19,10 @@ sidekiq_defaults: &sidekiq_defaults
       memory: 256Mi
 
 rails_env:
-  ALFRED_HOST: example.com
-  KENNETH_HOST: &KENNETH_HOST example.com
-  SITEMAP_HOST: &SITEMAP_HOST cdn.example.com
+  EXAMPLE_HOST: example.com
 
 image:
-  repository: XXXXXXXXXXXX.dkr.ecr.us-east-1.amazonaws.com/archdaily/example
+  repository: XXXXXXXXXXXX.dkr.ecr.us-east-1.amazonaws.com/organization/example
   tag: '1.0'
   env: production
   branch: master
@@ -48,10 +46,10 @@ deployment:
       protocol: TCP
     healthcheck:
       readinessProbe:
-        path: path/to/readiness
+        path: /path/to/readiness
         timeoutSeconds: 5
       livenessProbe:
-        path: path/to/liveness
+        path: /path/to/liveness
         timeoutSeconds: 10
     <<: *webapp_defaults
 
@@ -66,14 +64,10 @@ service:
     protocol: TCP
 
 external_services: &external_services
-  - path: /auth
-    serviceName: kenneth
+  - path: /example
+    serviceName: example
     servicePort: 80
-    externalName: *KENNETH_HOST
-  - path: /sitemaps/*
-    serviceName: sitemap
-    servicePort: 80
-    externalName: *SITEMAP_HOST
+    externalName: *EXAMPLE_HOST
 
 ingress:
   enabled: false
@@ -88,7 +82,7 @@ ingress:
   # - alb.ingress.kubernetes.io/scheme: internet-facing
 
   rules:
-  - url: example.dyn.archdaily.com/
+  - url: service.example.com/
     serviceName: example
     servicePort: 80
 
@@ -111,8 +105,8 @@ background:
       command: ['bundle', 'exec', 'sidekiq', '-C', 'config/sidekiq.yml']
       graceful_exit: ["bundle", "exec", "sidekiqctl", "stop", "tmp/pids/sidekiq.pid", "30"] # SIGTERM triggers a quick exit; gracefully terminate instead
 
-rake_files:
+rake_jobs:
   enabled: true
   jobs:
     - name: emails-prefix
-      command: ['command']
+      command: ['bundle', 'exec', 'rake', 'namespace:task']
