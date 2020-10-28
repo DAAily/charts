@@ -24,4 +24,4 @@ jobs:
         with:
           charts_dir: stable
         env:
-          CR_TOKEN: "${{ secrets.PAT }}"
+          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
