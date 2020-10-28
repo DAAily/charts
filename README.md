@@ -24,5 +24,5 @@ $ helm upgrade release_name ./deploy/helm/chart-ad/ \
 ### Custom values
 
 You can supply as many custom values files as you want using `--values` or `-f` flag.
-[here](https://github.com/PNet/charts/blob/main/stable/examples) you can find custom
+[here](https://github.com/PNet/charts/tree/main/examples) you can find custom
 values file examples.
