@@ -62,10 +62,10 @@ service:
     protocol: TCP
 
 external_services: &external_services
-  - path: /example
-    serviceName: example
-    servicePort: 80
-    externalName: *EXAMPLE_HOST
+  # - path: /example
+  #   serviceName: example
+  #   servicePort: 80
+  #   externalName: *EXAMPLE_HOST
 
 ingress:
   enabled: false
