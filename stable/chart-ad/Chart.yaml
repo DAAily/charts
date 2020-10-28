@@ -1,6 +1,6 @@
 apiVersion: v2
 name: chart-ad
-version: 0.0.7
+version: 0.0.8
 home: https://archdaily.com/
 maintainers:
 - name: Ops Team
