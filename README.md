@@ -5,14 +5,14 @@ The AD's helm charts repository
 
 ### Add Repo
 ```bash
-$ helm repo add ad-stable https://pnet.github.io/charts/
-$ helm repo update
+helm repo add ad-stable https://pnet.github.io/charts/
+helm repo update
 ```
 
 ### Install
 
 ```bash
-$ helm upgrade release_name ./deploy/helm/chart-ad/ \
+helm upgrade release_name ad-stable/chart-ad \
     --install \
     --wait \
     --timeout=300s \
