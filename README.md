@@ -18,7 +18,7 @@ $ helm upgrade release_name ./deploy/helm/chart-ad/ \
     --timeout=300s \
     -f path/to/default_values.yaml \
     -f path/to/overrides_values.yaml \
-    --set foo.bar=value \
+    --set foo.bar=value
 ```
 
 ### Custom values
