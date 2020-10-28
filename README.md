@@ -16,13 +16,13 @@ $ helm upgrade release_name ./deploy/helm/chart-ad/ \
     --install \
     --wait \
     --timeout=300s \
-    --values=path/to/custom_values.yaml \
-    --values=path/to/custom_values2.yaml \
+    -f path/to/default_values.yaml \
+    -f path/to/overrides_values.yaml \
     --set foo.bar=value \
 ```
 
 ### Custom values
 
 You can supply as many custom values files as you want using `--values` or `-f` flag.
-[here](https://github.com/PNet/charts/blob/main/stable/chart-ad/values.yaml) you can find a custom
-values file example.
+[here](https://github.com/PNet/charts/blob/main/stable/examples) you can find custom
+values file examples.

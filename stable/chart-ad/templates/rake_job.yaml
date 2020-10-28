@@ -1,4 +1,4 @@
-{{- if and .Values.rake_jobs.enabled (eq .Values.image.env "staging") }}
+{{- if and .Values.rake_jobs.enabled }}
 {{ $image := .Values.image }}
 {{- range .Values.rake_jobs.jobs }}
 apiVersion: batch/v1

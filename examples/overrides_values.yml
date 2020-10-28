@@ -1,0 +1,11 @@
+rails_env:
+  FOO: bar
+
+cron:
+  enabled: false
+
+background:
+  enabled: false
+
+rake_jobs:
+  enabled: false
