@@ -1,4 +1,4 @@
-{{- if and .Values.cron.enabled -}}
+{{- if .Values.cron.enabled -}}
 {{- range .Values.cron.jobs }}
 apiVersion: batch/v1beta1
 kind: CronJob
