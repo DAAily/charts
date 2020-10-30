@@ -68,7 +68,7 @@ external_services: &external_services
   #   externalName: *EXAMPLE_HOST
 
 ingress:
-  enabled: false
+  enabled: true
 
   annotations:
   # - nginx.ingress.kubernetes.io/proxy-body-size: 100m
@@ -80,9 +80,14 @@ ingress:
   # - alb.ingress.kubernetes.io/scheme: internet-facing
 
   rules:
-  - url: service.example.com/
-    serviceName: example
-    servicePort: 80
+  - host: example.com
+    paths:
+      proxy_pass: *external_services
+      default:
+        - path: /
+          serviceName: example
+          servicePort: 80
+
 
 cron:
   enabled: true

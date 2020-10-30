@@ -23,10 +23,10 @@ metadata:
 spec:
   rules:
   {{- range $rule := .Values.ingress.rules }}
-    {{- if ne $imageEnv "production" }}
+    {{- if eq $imageEnv "staging" }}
     - host: {{ printf "%s" $releaseName | trunc 63 }}.staging.archdaily.com
     {{- else }}
-    -
+    - host: {{ $rule.host }}
     {{- end }}
       http:
         paths:

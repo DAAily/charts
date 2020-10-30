@@ -80,9 +80,13 @@ ingress:
   # - alb.ingress.kubernetes.io/scheme: internet-facing
 
   rules:
-  - url: service.example.com/
-    serviceName: example
-    servicePort: 80
+  - host: example.com
+    paths:
+      proxy_pass: *external_services
+      default:
+        - path: /
+          serviceName: example
+          servicePort: 80
 
 cron:
   enabled: true
