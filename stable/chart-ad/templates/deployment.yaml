@@ -52,6 +52,7 @@ spec:
 {{ toYaml $container.ports | indent 8 }}
         {{ end -}}
         {{- if $container.healthcheck -}}
+        {{- if $container.healthcheck.readinessProbe -}}
         readinessProbe:
           httpGet:
             path: {{ $container.healthcheck.readinessProbe.path }}
@@ -64,6 +65,8 @@ spec:
           periodSeconds: 20
           successThreshold: 1
           timeoutSeconds: {{ $container.healthcheck.readinessProbe.timeoutSeconds }}
+        {{ end -}}
+        {{- if $container.healthcheck.livenessProbe -}}
         livenessProbe:
           httpGet:
             path: {{ $container.healthcheck.livenessProbe.path }}
@@ -75,6 +78,7 @@ spec:
           periodSeconds: 30
           successThreshold: 1
           timeoutSeconds: {{ $container.healthcheck.livenessProbe.timeoutSeconds }}
+        {{ end -}}
         {{ end -}}
         {{- if $container.command }}
         command: {{ $container.command }}
