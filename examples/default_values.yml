@@ -79,14 +79,16 @@ ingress:
   # - kubernetes.io/ingress.class: alb
   # - alb.ingress.kubernetes.io/scheme: internet-facing
 
-  rules:
-  - host: example.com
-    paths:
-      proxy_pass: *external_services
-      default:
-        - path: /
-          serviceName: example
-          servicePort: 80
+  hosts:
+    - example.com
+
+  paths:
+    proxy_pass:
+      *external_services
+    default:
+      - path: / # For alb-ingress, change "/" to "/*"
+        serviceName: example
+        servicePort: 80
 
 cron:
   enabled: true
