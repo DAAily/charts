@@ -14,33 +14,25 @@ metadata:
     env: {{ .Values.image.env }}
 {{- if .Values.ingress.annotations }}
   annotations:
-  {{- if eq $imageEnv "production" }}
-    {{ toYaml .Values.ingress.annotations.production | indent 4 | trim }}
-  {{- else }}
-    {{ toYaml .Values.ingress.annotations.default | indent 4 | trim }}
-  {{- end }}
+    {{ toYaml .Values.ingress.annotations | indent 4 | trim }}
 {{- end }}
 spec:
   rules:
-  {{- range $rule := .Values.ingress.rules }}
-    {{- if eq $imageEnv "staging" }}
-    - host: {{ printf "%s" $releaseName | trunc 63 }}.staging.archdaily.com
-    {{- else }}
-    - host: {{ $rule.host }}
-    {{- end }}
+  {{- range $host := .Values.ingress.hosts }}
+    - host: {{ tpl $host $ }}
       http:
         paths:
-        {{- range $item := $rule.paths.proxy_pass }}
+        {{- range $item := $.Values.ingress.paths.proxy_pass }}
         - backend:
             serviceName: {{ printf "%s" $releaseName | trunc 63 }}-{{ .serviceName }}-proxy-pass
             servicePort: {{ .servicePort }}
           path: {{ .path }}
         {{- end -}}
-        {{- range $item := $rule.paths.default }}
+        {{- range $item := $.Values.ingress.paths.default }}
         - backend:
             serviceName: {{ printf "%s" $releaseName | trunc 63 }}
             servicePort: {{ .servicePort }}
-          path: {{ .path }}{{ if eq $imageEnv "production" }}*{{ end }}
+          path: {{ .path }}
         {{- end -}}
   {{- end -}}
 {{- end }}
