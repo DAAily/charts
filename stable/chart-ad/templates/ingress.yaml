@@ -19,8 +19,7 @@ metadata:
 spec:
   rules:
   {{- range $host := .Values.ingress.hosts }}
-    - host: {{ tpl $host $ }}
-      http:
+    - http:
         paths:
         {{- range $item := $.Values.ingress.paths.proxy_pass }}
         - backend:
@@ -34,5 +33,8 @@ spec:
             servicePort: {{ .servicePort }}
           path: {{ .path }}
         {{- end -}}
+    {{- if not (empty $host) }}
+      host: {{ tpl $host $ }}
+    {{- end }}
   {{- end -}}
 {{- end }}
