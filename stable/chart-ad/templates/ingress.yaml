@@ -3,7 +3,7 @@
 {{- $imageTag := .Values.image.tag -}}
 {{- $imageEnv := .Values.image.env -}}
 {{- $imageBranch := .Values.image.branch -}}
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: {{ printf "%s" .Release.Name | trunc 63 }}
