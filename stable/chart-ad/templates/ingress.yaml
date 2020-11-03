@@ -3,7 +3,7 @@
 {{- $imageTag := .Values.image.tag -}}
 {{- $imageEnv := .Values.image.env -}}
 {{- $imageBranch := .Values.image.branch -}}
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: {{ printf "%s" .Release.Name | trunc 63 }}
@@ -19,8 +19,7 @@ metadata:
 spec:
   rules:
   {{- range $host := .Values.ingress.hosts }}
-    - host: {{ tpl $host $ }}
-      http:
+    - http:
         paths:
         {{- range $item := $.Values.ingress.paths.proxy_pass }}
         - backend:
@@ -34,5 +33,8 @@ spec:
             servicePort: {{ .servicePort }}
           path: {{ .path }}
         {{- end -}}
+    {{- if not (empty $host) }}
+      host: {{ tpl $host $ }}
+    {{- end }}
   {{- end -}}
 {{- end }}
