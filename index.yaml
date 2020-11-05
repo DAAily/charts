@@ -2,6 +2,17 @@ apiVersion: v1
 entries:
   chart-ad:
   - apiVersion: v2
+    created: "2020-11-05T19:27:12.134693077Z"
+    digest: 9d762b83c612cc5207fc6c887dca02df8a556e783920ec7754dabe2842269292
+    home: https://archdaily.com/
+    maintainers:
+    - email: ops@archdaily.com
+      name: Ops Team
+    name: chart-ad
+    urls:
+    - https://github.com/PNet/charts/releases/download/chart-ad-0.0.16/chart-ad-0.0.16.tgz
+    version: 0.0.16
+  - apiVersion: v2
     created: "2020-11-03T21:10:05.934408632Z"
     digest: 21c2d89395198449457365362d6f2bce9bc87dfb99a1f0b25bfc6cee807d3418
     home: https://archdaily.com/
