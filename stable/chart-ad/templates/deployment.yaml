@@ -15,7 +15,6 @@ metadata:
     release: {{ .Release.Name }}
     env: {{ .Values.image.env }}
 spec:
-  replicas: 1
   selector:
     matchLabels:
       app: {{ printf "%s" .Release.Name | trunc 63 }}
