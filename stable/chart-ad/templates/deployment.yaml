@@ -59,7 +59,7 @@ spec:
             httpHeaders:
               - name: User-Agent
                 value: readiness-probe
-          initialDelaySeconds: 30
+          initialDelaySeconds: {{ default 30 $container.healthcheck.readinessProbe.initialDelaySeconds }}
           failureThreshold: 3
           periodSeconds: 20
           successThreshold: 1
