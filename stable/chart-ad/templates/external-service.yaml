@@ -10,6 +10,6 @@ metadata:
     env: {{ $.Values.image.env }}
 spec:
   type: ExternalName
-  externalName: {{ .externalName }}
+  externalName: {{ tpl .externalName $ }}
 ---
 {{ end }}
