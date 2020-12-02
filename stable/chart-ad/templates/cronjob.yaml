@@ -16,6 +16,9 @@ spec:
     spec:
       template:
         spec:
+          {{- if not (empty .activeDeadlineSeconds) }}
+          activeDeadlineSeconds: {{ .activeDeadlineSeconds }}
+          {{- end }}
           restartPolicy: Never
           tolerations:
           - key: "worker"

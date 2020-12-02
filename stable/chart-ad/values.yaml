@@ -97,6 +97,7 @@ cron:
   jobs:
     -
       name: cronjob-name
+      activeDeadlineSeconds: 300
       schedule: '* * * * *'  #cron schedule expression
       command: ['command']
 
