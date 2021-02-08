@@ -79,6 +79,10 @@ ingress:
   # - kubernetes.io/ingress.class: alb
   # - alb.ingress.kubernetes.io/scheme: internet-facing
 
+tgb:
+  enabled: false
+  target_group_arn: aws_target_group_arn
+
   hosts:
     - example.com
 
