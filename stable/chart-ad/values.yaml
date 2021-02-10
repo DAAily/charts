@@ -37,6 +37,11 @@ deployment:
   targetCPUUtilizationPercentage: 65
   targetMemUtilizationPercentage: 80
 
+  # Pod Disruption Budget
+  pdb:
+    enabled: true
+    maxUnavailable: 1
+
   containers:
   - name: webapp
     ports:
