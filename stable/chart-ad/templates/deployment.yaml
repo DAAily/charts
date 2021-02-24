@@ -50,6 +50,10 @@ spec:
         ports:
 {{ toYaml $container.ports | indent 8 }}
         {{ end -}}
+        {{- if $container.lifecycle -}}
+        lifecycle:
+{{ toYaml $container.lifecycle | indent 10 }}
+        {{ end -}}
         {{- if $container.healthcheck -}}
         {{- if $container.healthcheck.readinessProbe -}}
         readinessProbe:
