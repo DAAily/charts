@@ -96,6 +96,10 @@ ingress:
       *external_services
     default:
       - path: / # For alb-ingress, change "/" to "/*"
+        serviceName: ssl-redirect
+        servicePort: use-annotation     
+
+      - path: / # For alb-ingress, change "/" to "/*"
         serviceName: example
         servicePort: 80
 

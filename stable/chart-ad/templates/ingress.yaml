@@ -29,7 +29,11 @@ spec:
         {{- end -}}
         {{- range $item := $.Values.ingress.paths.default }}
         - backend:
+            {{- if eq .serviceName "ssl-redirect" }}
+            serviceName: ssl-redirect
+            {{- else }}
             serviceName: {{ printf "%s" $releaseName | trunc 63 }}
+            {{- end}}
             servicePort: {{ .servicePort }}
           path: {{ .path }}
         {{- end -}}
