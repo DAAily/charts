@@ -19,7 +19,7 @@ spec:
           {{- if not (empty .activeDeadlineSeconds) }}
           activeDeadlineSeconds: {{ .activeDeadlineSeconds }}
           {{- end }}
-          restartPolicy: Never
+          restartPolicy: {{ default "Never" .restartPolicy }}
           tolerations:
           - key: "worker"
             operator: "Equal"
