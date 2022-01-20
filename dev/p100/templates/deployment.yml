@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.app.name }}
+spec:
+  replicas: {{ .Values.app.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.app.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.app.name }}
+    spec:
+      containers:
+      - name: {{ .Values.app.name }}
+        image: {{ .Values.app.image }}
+        imagePullPolicy: {{ .Values.app.imagePullPolicy }}
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        command:
+          - bundle
+          - exec
+          - puma
+        args:
+          - "-C"
+          - "config/puma.rb"
+        env:
+        #- name: RAILS_ENV
+        #  value: "production"
+        #- name: RAILS_MASTER_KEY
+        #  value: "99015a2c2046247d5f0827c93c417420"
+        - name: RAILS_ENV
+          valueFrom:
+            secretKeyRef:
+              name: projects-top-100-secrets
+              key: rails_env
+        - name: RAILS_MASTER_KEY
+          valueFrom:
+            secretKeyRef:
+              name: projects-top-100-secrets
+              key: rails_master_key
+        - name : DATABASE_URL
+          value: "postgres://postgres:mysecretpassword@projects-top-100.co81z9vhtswj.us-east-1.rds.amazonaws.com/projects-top-100_production?pool=5"            
+        ports:
+        - containerPort: {{ .Values.app.containerPort }}
+          protocol: {{ .Values.app.protocol }}

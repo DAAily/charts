@@ -1,0 +1,29 @@
+service:
+  name: projects-top-100
+  type: ClusterIP
+  port: 80
+  targetPort: 3000
+  protocol: TCP
+app:
+  name: projects-top-100
+  replicas: 2
+  image: 597475663396.dkr.ecr.us-east-1.amazonaws.com/archdaily/projects-top-100:c36fd32
+  imagePullPolicy: Always
+  containerPort: 3000
+  protocol: TCP
+ingress:
+  host: projects-top-100.archdaily.internal
+  serviceName: projects-top-100
+  servicePort: 80
+pdb:
+  name: projects-top-100
+  minAvailable: 3
+limits:
+  name: mem-limit-range
+  default_memory: 128Mi
+  drequest_memory: 64Mi
+secretos:
+  name: projects-top-100-secrets
+  type: Opaque
+  rails_env: cHJvZHVjdGlvbg==
+  rails_mkey: OTkwMTVhMmMyMDQ2MjQ3ZDVmMDgyN2M5M2M0MTc0MjA=
