@@ -2,7 +2,7 @@ apiVersion: v2
 name: p100-chart
 description: A Helm chart for projects-top-100 application.
 type: application
-version: 0.1.56
+version: 0.1.57
 appVersion: "1.16.0"
 maintainers:
 - name: Victor Rodriguez
