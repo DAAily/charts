@@ -5,7 +5,8 @@ service:
   protocol: TCP
 app:
   replicas: 2
-  image: 597475663396.dkr.ecr.us-east-1.amazonaws.com/archdaily/projects-top-100:latest
+  image: 597475663396.dkr.ecr.us-east-1.amazonaws.com/archdaily/projects-top-100
+  tag: 'c36fd32'
   imagePullPolicy: Always
   containerPort: 3000
   protocol: TCP
