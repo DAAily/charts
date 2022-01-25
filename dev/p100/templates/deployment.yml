@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: {{ .Release.Name }}
-        image: {{ .Values.app.image }}:{{ Values.app.tag }}
+        image: {{ .Values.app.image }}:{{ .Values.app.tag }}
         imagePullPolicy: {{ .Values.app.imagePullPolicy }}
         resources:
           requests:
