@@ -39,12 +39,14 @@ spec:
         - name: RAILS_ENV
           valueFrom:
             secretKeyRef:
-              name: projects-top-100-secrets
+             #name: projects-top-100-secrets
+              name: {{ .Release.Name }}
               key: rails_env
         - name: RAILS_MASTER_KEY
           valueFrom:
             secretKeyRef:
-              name: projects-top-100-secrets
+             #name: projects-top-100-secrets
+              name: {{ .Release.Name }}
               key: rails_master_key
         - name : DATABASE_URL
           value: "postgres://postgres:mysecretpassword@projects-top-100.co81z9vhtswj.us-east-1.rds.amazonaws.com/projects-top-100_production?pool=5"            
