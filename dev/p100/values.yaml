@@ -16,7 +16,6 @@ ingress:
 pdb:
   minAvailable: 3
 limits:
-  name: mem-limit-range
   default_memory: 128Mi
   drequest_memory: 64Mi
 secretos:
