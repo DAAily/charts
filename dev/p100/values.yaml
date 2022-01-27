@@ -19,6 +19,6 @@ limits:
   default_memory: 128Mi
   drequest_memory: 64Mi
 secretos:
-  type: Opaque
-  rails_env: cHJvZHVjdGlvbg==
-  rails_mkey: OTkwMTVhMmMyMDQ2MjQ3ZDVmMDgyN2M5M2M0MTc0MjA=
+    type: Opaque
+    rails_env: cHJvZHVjdGlvbg==
+    rails_mkey: OTkwMTVhMmMyMDQ2MjQ3ZDVmMDgyN2M5M2M0MTc0MjA=
