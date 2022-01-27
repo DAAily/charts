@@ -32,22 +32,18 @@ spec:
           - "-C"
           - "config/puma.rb"
         env:
-        #- name: RAILS_ENV
-        #  value: "production"
-        #- name: RAILS_MASTER_KEY
-        #  value: "99015a2c2046247d5f0827c93c417420"
         - name: RAILS_ENV
           valueFrom:
             secretKeyRef:
-             #name: projects-top-100-secrets
               name: {{ .Release.Name }}
-              key: rails_env
+              #key: rails_env
+            key: {{ toYaml .Values.secretos.rails_env | indent 4 }}
         - name: RAILS_MASTER_KEY
           valueFrom:
             secretKeyRef:
-             #name: projects-top-100-secrets
               name: {{ .Release.Name }}
-              key: rails_master_key
+              #key: rails_master_key
+            key: {{ toYaml .Values.secretos.rails_master_key | indent 4 }}
         - name : DATABASE_URL
           value: "postgres://postgres:mysecretpassword@projects-top-100.co81z9vhtswj.us-east-1.rds.amazonaws.com/projects-top-100_production?pool=5"            
         ports:
