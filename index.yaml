@@ -246,6 +246,19 @@ entries:
   p100-chart:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2022-01-27T16:53:47.571687302Z"
+    description: A Helm chart for projects-top-100 application.
+    digest: e3abaeecc7a80b146f70d47eb13a7739d715b0757034e9bea485218effb575dc
+    maintainers:
+    - email: victor.rodriguez@example.com
+      name: Victor Rodriguez
+    name: p100-chart
+    type: application
+    urls:
+    - https://github.com/PNet/charts/releases/download/p100-chart-0.1.60/p100-chart-0.1.60.tgz
+    version: 0.1.60
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2022-01-26T01:50:50.965707179Z"
     description: A Helm chart for projects-top-100 application.
     digest: 428eb163215953ffbf18b9d3424a21ab06c9885c50b9099b6ab229f9fe70d257
