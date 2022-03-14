@@ -5,7 +5,7 @@ The AD's helm charts repository
 
 ### Add Repo
 ```bash
-helm repo add ad-stable https://pnet.github.io/charts/
+helm repo add ad-stable https://daaily.github.io/charts/
 helm repo update
 ```
 
