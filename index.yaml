@@ -2,6 +2,17 @@ apiVersion: v1
 entries:
   chart-ad:
   - apiVersion: v2
+    created: "2022-11-11T14:19:04.34356113Z"
+    digest: 19226eae909d47ceaacda2ae39c5ff87f6fd9089c54db1985ee97723e5d32669
+    home: https://archdaily.com/
+    maintainers:
+    - email: ops@archdaily.com
+      name: Ops Team
+    name: chart-ad
+    urls:
+    - https://github.com/DAAily/charts/releases/download/chart-ad-0.0.26/chart-ad-0.0.26.tgz
+    version: 0.0.26
+  - apiVersion: v2
     created: "2022-03-14T20:00:54.27870449Z"
     digest: 129dc61b4d2e7c5b95b31707e3a38dd1aaec5133a0453fc67603f23e5bfee056
     home: https://archdaily.com/
