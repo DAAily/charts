@@ -22,7 +22,7 @@ spec:
     - http:
         paths:
         {{- range $item := $.Values.ingress.paths.proxy_pass }}
-        - defaultBackend:
+        - backend:
             service:
               name: {{ printf "%s" $releaseName | trunc 63 }}-{{ .serviceName }}-proxy-pass
               port:
@@ -31,16 +31,11 @@ spec:
           pathType: Prefix
         {{- end -}}
         {{- range $item := $.Values.ingress.paths.default }}
-        - defaultBackend:
-            {{- if eq .serviceName "ssl-redirect" }}
-            service:
-              name: ssl-redirect
-            {{- else }}
+        - backend:
             service:
               name: {{ printf "%s" $releaseName | trunc 63 }}
-            {{- end}}
               port:
-                number: {{ .servicePort }}
+                number: {{ int .servicePort }}
           path: {{ .path }}
           pathType: Prefix
         {{- end -}}
